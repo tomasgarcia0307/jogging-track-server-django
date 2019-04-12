@@ -7,17 +7,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+   
 
 class RecordViewSet(viewsets.ModelViewSet):
     serializer_class = RecordSerializer
     queryset = Record.objects.all()    
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
 
 class Singup(views.APIView):
     def post (self, request, format='json'):

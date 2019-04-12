@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'api',
     'corsheaders',
 ]
@@ -59,6 +58,22 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080/'
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'api.utils.jwt_response_payload_handler'
+    #'rest_framework_jwt.utils.jwt_response_payload_handler',
+}
 
 ROOT_URLCONF = 'backendjogging.urls'
 
@@ -110,17 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    # ...
-    
-    # inside the Rest framework settings dictionary, add the auth settings
-    # Authentication settings
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ],
-    
-    #...
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
